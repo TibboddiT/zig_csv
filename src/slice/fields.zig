@@ -148,7 +148,7 @@ pub const Parser = struct {
 
             const match_quotes: u64 = match('"', chunk);
 
-            const match_commas = match(',', chunk);
+            const match_commas = match(';', chunk);
 
             const match_crs = match('\r', chunk);
             defer self._state.prev_cr = match_crs;
@@ -273,7 +273,7 @@ pub const Parser = struct {
             }
         }
 
-        if (self.done() and self._text[self._text.len - 1] == ',') {
+        if (self.done() and self._text[self._text.len - 1] == ';') {
             self._state.field_start = true;
             return Field{
                 .data = field,

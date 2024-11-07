@@ -34,7 +34,7 @@ pub const RowIterator = struct {
                 } else {
                     in_quote = false;
                 }
-            } else if (cur == ',') {
+            } else if (cur == ';') {
                 if (in_quote) continue;
                 defer self._pos = cur_index + 1;
                 return self._row._data[self._pos..cur_index];
@@ -130,7 +130,7 @@ pub const Parser = struct {
         }
 
         var in_quote = false;
-        var last: u8 = ',';
+        var last: u8 = ';';
         var cur_index = self._pos;
 
         var index: usize = 0;
@@ -142,7 +142,7 @@ pub const Parser = struct {
                 last = cur;
             }
 
-            if (!in_quote and last == ',' and cur == '"') {
+            if (!in_quote and last == ';' and cur == '"') {
                 in_quote = true;
             } else if (cur == '"') {
                 if (!in_quote) {
@@ -153,7 +153,7 @@ pub const Parser = struct {
                     if (nxt == '"') {
                         cur_index += 1;
                         continue;
-                    } else if (nxt == ',' or nxt == '\r' or nxt == '\n') {
+                    } else if (nxt == ';' or nxt == '\r' or nxt == '\n') {
                         in_quote = false;
                         continue;
                     } else {

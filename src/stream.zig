@@ -140,7 +140,7 @@ pub fn Parser(
                             '"' => {
                                 if (self.peek()) |p| {
                                     switch (p) {
-                                        ',', '\r', '\n' => {
+                                        ';', '\r', '\n' => {
                                             self._flags._in_quote = false;
                                             try self.consume();
                                             continue;
@@ -179,7 +179,7 @@ pub fn Parser(
                             self._flags._field_start = false;
                             try self.consume();
                         },
-                        ',',
+                        ';',
                         => {
                             self._flags._field_start = true;
                             self._flags._row_end = false;

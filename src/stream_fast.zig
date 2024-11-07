@@ -153,7 +153,7 @@ pub fn Parser(comptime Reader: type, comptime Writer: type) type {
                         }
                     }
 
-                    if (end_pos < self._state.cur_bytes_len and self._state.cur_bytes[end_pos] == ',') {
+                    if (end_pos < self._state.cur_bytes_len and self._state.cur_bytes[end_pos] == ';') {
                         self._state.field_start = true;
                     }
                     return;
@@ -179,7 +179,7 @@ pub fn Parser(comptime Reader: type, comptime Writer: type) type {
                 std.debug.assert(chunk.len <= chunk_size);
 
                 const match_quotes = match('"', chunk);
-                const match_commas = match(',', chunk);
+                const match_commas = match(';', chunk);
                 const match_crs = match('\r', chunk);
                 var match_lfs = match('\n', chunk);
 
@@ -241,7 +241,7 @@ pub fn Parser(comptime Reader: type, comptime Writer: type) type {
                         return CsvReadError.InvalidLineEnding;
                     }
 
-                    if (self._state.cur_bytes[self._state.cur_bytes_len - 1] == ',') {
+                    if (self._state.cur_bytes[self._state.cur_bytes_len - 1] == ';') {
                         self._state.field_start = true;
                     }
                 }

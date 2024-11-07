@@ -69,7 +69,7 @@ pub fn row(writer: anytype, in_row: anytype) !void {
         const field = @field(in_row, fields_info[i].name);
 
         if (i != 0) {
-            try writer.writeByte(',');
+            try writer.writeByte(';');
         }
 
         try value(writer, field);
@@ -360,7 +360,7 @@ test "row large" {
     defer expected.deinit();
     for (1..1025) |i| {
         if (i != 1) {
-            try expected.writer().writeByte(',');
+            try expected.writer().writeByte(';');
         }
         try expected.writer().print("{d}", .{i});
     }
